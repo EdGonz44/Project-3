@@ -99,8 +99,27 @@ app.layout = html.Div([
             value = 'world'
         ),
     ], style={'width': '45%', 'display': 'inline-block'}),
+    html.H3("Pesticide Correlation Heatmaps"),
     dcc.Graph(id='correlation-pest-chart'),
+
     
+    
+    html.Div([
+        html.Label('CO2 Emissions by Country'),
+        dcc.Dropdown(
+            id='co2-emissions-dropdown',
+            options = [
+                {'label':'Select Quartile', 'value': 'None'},
+                {'label':'Q1', 'value': 'q1'},
+                {'label': 'Q2', 'value':'q2'},
+                {'label': 'Q3', 'value': 'q4'},
+                {'label': 'Q4', 'value': 'q4'}
+            ],
+            value = 'q1'
+        ),
+    ], style={'width': '45%', 'display': 'inline-block'}),
+    html.H3("CO2 Emissions based on GDP Quartile"),
+    dcc.Graph(id='co2-emissions-graph'),
 
 ])
 

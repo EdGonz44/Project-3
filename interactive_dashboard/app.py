@@ -153,6 +153,7 @@ app.layout = html.Div([
     ], style={'width': '45%', 'display': 'inline-block'}),
     html.H3("CO2 Emissions by crop type"),
     dcc.Graph(id='crop-emissions-scatter'),
+    dcc.Markdown(id='correlation--crop-coefficient')  # New component to display text
 
 ])
 
@@ -369,7 +370,8 @@ def update_co2_emissions_m(selected_option):
 
    
 @app.callback(
-    Output('crop-emissions-scatter', 'figure'),
+    [Output('crop-emissions-scatter', 'figure'),
+    Output('correlation--crop-coefficient', 'children')],
     [Input('crop-emissions-dropdown', 'value')]
 )
 def update_crop_emissions_m(crop_type):
@@ -419,9 +421,9 @@ def update_crop_emissions_m(crop_type):
 
     # Print the Pearson correlation coefficient
     correlation_coefficient = round(pearsonr(x, y)[0], 2)
-    print(f"The correlation coefficient between CO2 Emissions and Crop Yield is {correlation_coefficient}")
+    
 
-    return fig
+    return fig, f"The correlation coefficient between CO2 Emissions and Crop Yield is **{correlation_coefficient}**"
 
 
 
@@ -440,10 +442,4 @@ if __name__ == '__main__':
 
 
 
-
-
-# q1_m = cumulative.loc[(cumulative["co2_emissions"] > c_summary["co2_emissions"]["25%"])]
-    # q2_m = cumulative.loc[(cumulative["co2_emissions"] <= c_summary["co2_emissions"]["25%"]) & (cumulative["co2_emissions"] < c_summary["co2_emissions"]["50%"])]
-    # q3_m = cumulative.loc[(cumulative["co2_emissions"] <= c_summary["co2_emissions"]["50%"]) & (cumulative["co2_emissions"] < c_summary["co2_emissions"]["75%"])]
-    # q4_m = cumulative.loc[(cumulative["co2_emissions"] >= c_summary["co2_emissions"]["75%"])]
 

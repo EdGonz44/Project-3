@@ -7,6 +7,16 @@ import pandas as pd
 # Load your dataset
 data = pd.read_json('data.json')
 
+#HeatMap-Pesticide imports
+complete_e = pd.read_csv()
+outlier_e = pd.read_csv()
+q1_e = pd.read_csv()
+q2_e = pd.read_csv()
+q3_e = pd.read_csv()
+q3_e = pd.read_csv()
+q4_e = pd.read_csv()
+
+
 # Initialize the Dash app
 app = dash.Dash(__name__)
 
@@ -71,6 +81,27 @@ app.layout = html.Div([
     # Second Section: CO2 Emissions vs. Industrial Activities (Manure Management, Fertilizer Production)
     html.H3("CO2 Emissions vs. Industrial Activities"),
     dcc.Graph(id='industry-emissions-graph'),
+
+     
+     html.Div([
+        html.Label('Correlation Heatmaps/Pesticides:'),
+        dff.Dropdown(
+            id='correlation-heatmap-dropdown',
+            options = [
+                {'label':'Select Variables', 'value': 'None'},
+                {'label':'World', 'value': 'world'},
+                {'label': 'Outlier', 'value':'outlier'},
+                {'label': 'Q1', 'value': 'q1'},
+                {'label': 'Q2', 'value': 'q2'},
+                {'label': 'Q3', 'value': 'q3'},
+                {'label': 'Q4', 'value': 'q4'}
+            ],
+            value = 'world'
+        ),
+    ], style={'width': '45%', 'display': 'inline-block'}),
+    dcc.Graph(id='correlation-pest-chart'),
+    
+
 ])
 
 # Callback to update the main general dashboard graph based on dropdown selections
@@ -154,6 +185,72 @@ def update_scatter(selected_country):
     fig = px.scatter(filtered_data, x='Average Temperature °C', y='total_emission',
                      title=f'Correlation between Temperature and Emissions for {selected_country}')
     return fig
+
+
+#Callback for the new chart based on HeatMap correlation
+@app.callback(
+    Output('correlation-pest-chart', 'figure'),
+    [Input('correlation-heatmap-dropdown', 'value')]
+)
+def update_pest_corr(selected_option):
+    if selected_option =='world':
+        #Creates pest-matrix based on selected metric for correlation-heatmap-dropdown
+        corr_matrix_df = complete_e.drop(columns = ['Code', 'Year', 'Country', 'Z-Score', 'Is-Outlier'])
+        corr_mat = corr_matrix_df.corr()
+        # Generate a heatmap
+        fig = px.imshow(corr_mat, title = 'Correlation Matrix World',
+                        color_continuous_scale='RdBu',
+                        zmin=-1, zmax=1)
+            
+    elif selected_option =='outlier':
+    #Creates pest-matrix based on selected metric for correlation-heatmap-dropdown
+        corr_matrix_df = outlier_e.drop(columns = ['Code', 'Year', 'Country', 'Z-Score', 'Is-Outlier'])
+        corr_mat = corr_matrix_df.corr()
+        # Generate a heatmap
+        fig = px.imshow(corr_mat, title = 'Correlation Matrix Outlier',
+                        color_continuous_scale='RdBu',
+                        zmin=-1, zmax=1)
+    elif selected_option =='q1':
+    #Creates pest-matrix based on selected metric for correlation-heatmap-dropdown
+        corr_matrix_df = q1_e.drop(columns = ['Code', 'Year', 'Country', 'Z-Score', 'Is-Outlier'])
+        corr_mat = corr_matrix_df.corr()
+        # Generate a heatmap
+        fig = px.imshow(corr_mat, title = 'Correlation Matrix Q1',
+                        color_continuous_scale='RdBu',
+                        zmin=-1, zmax=1)
+        
+    elif selected_option =='q2':
+    #Creates pest-matrix based on selected metric for correlation-heatmap-dropdown
+        corr_matrix_df = q2_e.drop(columns = ['Code', 'Year', 'Country', 'Z-Score', 'Is-Outlier'])
+        corr_mat = corr_matrix_df.corr()
+        # Generate a heatmap
+        fig = px.imshow(corr_mat, title = 'Correlation Matrix Q2',
+                        color_continuous_scale='RdBu',
+                        zmin=-1, zmax=1)
+        
+    elif selected_option =='q3':
+    #Creates pest-matrix based on selected metric for correlation-heatmap-dropdown
+        corr_matrix_df = q3_e.drop(columns = ['Code', 'Year', 'Country', 'Z-Score', 'Is-Outlier'])
+        corr_mat = corr_matrix_df.corr()
+        # Generate a heatmap
+        fig = px.imshow(corr_mat, title = 'Correlation Matrix Q3',
+                        color_continuous_scale='RdBu',
+                        zmin=-1, zmax=1)
+        
+    elif selected_option =='q4':
+    #Creates pest-matrix based on selected metric for correlation-heatmap-dropdown
+        corr_matrix_df = q4_e.drop(columns = ['Code', 'Year', 'Country', 'Z-Score', 'Is-Outlier'])
+        corr_mat = corr_matrix_df.corr()
+        # Generate a heatmap
+        fig = px.imshow(corr_mat, title = 'Correlation Matrix World',
+                        color_continuous_scale='RdBu',
+                        zmin=-1, zmax=1)
+    else:
+         fig = {}
+    return fig
+
+
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)

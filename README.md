@@ -24,10 +24,10 @@ This project explores the relationship between CO2 emissions and agriculture. It
 Our initial goal was to see how CO2 emissions have impacted the crops over time and therefore impacted human health.
 
 ### Goals
-- **Dhawani** Do countries with higher land use for agriculture have higher CO2 emissions.
-- **Megan** What is the relationship between CO2 emissions and agricultural gdp.
-- **Eduardo** Do countries with higher CO2 emissions use more pesticides to grow their crops?
-- **Jenny** Has crop yield improved over time with pesticides? Has pesticide use decreased the amount of land needed to produce crops?
+- **[Dhawani]** Do countries with higher land use for agriculture have higher CO2 emissions.
+- **[Megan]** What is the relationship between CO2 emissions and agricultural gdp.
+- **[Eduardo]** Do countries with higher CO2 emissions use more pesticides to grow their crops?
+- **[Jenny]** Has crop yield improved over time with pesticides? Has pesticide use decreased the amount of land needed to produce crops?
 
 ### Methodology
 Detail the approach and methods used to achieve the project's goals.
@@ -42,20 +42,22 @@ In the "Methodology" section, you would typically describe the specific approach
    - **Example:** "Data was cleaned using Pandas, with missing values imputed using the median for continuous variables and mode for categorical variables."
 
 3. **Data Transformation:**
-   - Discuss any transformations you applied to the data, such as normalizing, scaling, or encoding categorical variables.
-   - **Example:** "Temperature values were converted from Fahrenheit to Celsius using a custom function in Pandas."
+   
 
 4. **Exploratory Data Analysis (EDA):**
-   - Outline the steps you took to explore the data, including any visualizations, summary statistics, or correlation analyses.
-   - **Example:** "EDA was performed using Matplotlib and Seaborn to visualize the distribution of temperatures across different latitudes."
+   - Summary statistics and correlation analyses for the dataframe.
+   - Visualized timeseries data.
 
 5. **Feature Engineering:**
-   - Describe how you created new features from the existing data that might help in analysis or modeling.
-   - **Example:** "A new feature, 'Season,' was created by categorizing the 'Month' column into Winter, Spring, Summer, and Fall."
+   - Created new variables:
+      - **ag_gdp** which is the GDP from agriculture and meant to capture the size of agriculture produced to better compare countries. This is created from the the percent of agricultural GDP and GDP.
+      - **pop_to_gdp** which is the multiple for population to GDP.
+      - **pop_to_ag_gdp** which is the multiple for population to agricultural GDP and is meant to account for population size and how much agriculture is produced.
+   - Created an additional dataframe of the cumulative data by country.
 
 6. **Data Analysis:**
-   - Explain the specific analyses you conducted, whether they were statistical tests, correlation analyses, regression models, etc.
-   - **Example:** "A linear regression model was used to examine the relationship between latitude and average temperature."
+   - Correlation analyses or main dataframe and cummulative dataframe.
+   - Explored regression models where the outcome being predicted was CO2 emissions. A multiple linear regression model was created with the variables population, gdp, and agricultural gdp that explained 57% of the variation in CO2 emissions.
 
 7. **Modeling and Prediction:**
    - If applicable, describe any machine learning models you used to make predictions or classify data.
@@ -70,8 +72,10 @@ In the "Methodology" section, you would typically describe the specific approach
    - **Example:** "A t-test was performed to compare the mean temperatures of cities at different latitudes."
 
 10. **Tools and Libraries:**
-    - List any specific tools, libraries, or software that played a crucial role in your methodology.
-    - **Example:** "The analysis was conducted in Python using Pandas for data manipulation, Matplotlib for plotting, and Scikit-learn for machine learning."
+    - Pandas: For data cleaning and manipulation.
+    - Numpy: For numerical computations.
+    - Matplotlib & Seaborn: For visualizations.
+    - Sklearn: For linear regression.
 
 #### Figure 0: [Figure Title]
 ![Figure 0](path/to/figure0.png)
@@ -108,13 +112,8 @@ In the "Methodology" section, you would typically describe the specific approach
 Summarize the key findings or results of the project.
 
 ## Future Work
-
-Discuss any potential extensions, improvements, or follow-up projects that could build on the work done in this project.
+- Add more data related to agriculture that's imported/exported.
+- Exploration of agricultural production on the environment - related emissions to production.
 
 ## Collaborators
-
-List the contributors to the project and briefly describe their contributions.
-
-- **[Name 1]:** Role and contributions (e.g., "Data analysis, visualizations, and writing the overview section.")
-- **[Name 2]:** Role and contributions (e.g., "Database management, methodology section, and figures creation.")
-- **[Name 3]:** Role and contributions (e.g., "Literature review, conclusions section, and future work suggestions.")
+- **[Megan]** Secondary research, story development, analysis related to CO2 emissions & agricultural GDP.

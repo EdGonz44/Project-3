@@ -3,6 +3,7 @@ from dash import html, dcc
 from dash.dependencies import Input, Output
 import plotly.express as px
 import pandas as pd
+from scipy.stats import linregress, pearsonr
 
 # Load your dataset
 data = pd.read_json('data.json')
@@ -92,7 +93,7 @@ app.layout = html.Div([
     html.H3("CO2 Emissions vs. Industrial Activities"),
     dcc.Graph(id='industry-emissions-graph'),
 
-     
+     #Creation of Heatmap based on pesticides
      html.Div([
         html.Label('Correlation Heatmaps/Pesticides:'),
         dcc.Dropdown(
@@ -113,7 +114,7 @@ app.layout = html.Div([
     dcc.Graph(id='correlation-pest-chart'),
 
     
-    
+    #Creation of CO2 emissions by country with GDP quartiles
     html.Div([
         html.Label('CO2 Emissions by Country'),
         dcc.Dropdown(
@@ -125,13 +126,42 @@ app.layout = html.Div([
                 {'label': 'Q3', 'value': 'q3'},
                 {'label': 'Q4', 'value': 'q4'}
             ],
-            value = 'None'
+            value = 'q1'
         ),
     ], style={'width': '45%', 'display': 'inline-block'}),
     html.H3("CO2 Emissions based on GDP Quartile"),
     dcc.Graph(id='co2-emissions-graph'),
 
+
+    #Creation of scatter plots based on co2 and crop type
+    html.Div([
+        html.Label('CO2 emissions by crop type'),
+        dcc.Dropdown(
+            id='crop-emissions-dropdown',
+            options = [
+                {'label':'Select Crop', 'value': 'None'},
+                {'label':'Coffee', 'value': 'Coffee'},
+                {'label': 'Vegetables', 'value':'Vegetables'},
+                {'label': 'Barley', 'value': 'Barley'},
+                {'label': 'Rice', 'value': 'Rice'},
+                {'label': 'Cotton', 'value': 'Cotton'},
+                {'label': 'Sugarcane', 'value': 'Sugarcane'},
+                {'label': 'Wheat', 'value': 'Wheat'},
+                {'label': 'Fruits', 'value': 'Fruits'},
+                {'label': 'Corn', 'value': 'Corn'},
+                {'label': 'Soybeans', 'value': 'Soybeans'}
+
+            ],
+            value = 'Coffee'
+        ),
+    ], style={'width': '45%', 'display': 'inline-block'}),
+    html.H3("CO2 Emissions by crop type"),
+    dcc.Graph(id='crop-emissions-scatter'),
+
 ])
+
+
+
 
 # Callback to update the main general dashboard graph based on dropdown selections
 @app.callback(
@@ -345,7 +375,7 @@ def update_pest_corr(selected_option):
          fig = {}
     return fig
 
-#Callback for the new chart based on HeatMap correlation
+#Callback for the new chart based on co2 emissions with GDP screening
 @app.callback(
     Output('co2-emissions-graph', 'figure'),
     [Input('co2-emissions-dropdown', 'value')]
@@ -405,36 +435,78 @@ def update_co2_emissions_m(selected_option):
         template='plotly'
     )
     return fig
-    # # higher cumulative co2 emission countries
-    # for country in q_countries_df.index:
-    #     # df is the main dataframe
-    #     worker = Main_m.loc[Main_m['country'] == country]
+   
 
-    #     # Add a column to identify the country
-    #     worker['country_name'] = country
-    #     combined_data.append(worker)
-
-    #     # Concatenate all the country DataFrames into a single DataFrame
-    #     combined_df = pd.concat(combined_data)
-
-    #     # Create the plot with all countries
-    #     fig = px.line(combined_df, x='year', y='co2_emissions', color='country_name',
-    #                   title='CO2 Emissions by Country')
+   
 
 
-    #     fig.update_layout(
-    #     xaxis_title='Year',
-    #     yaxis_title='CO2 Emissions (kt)',
-    #     title='CO2 Emissions by Country'
-    # )
-        
-    # Show the plot
-    # fig.show()
+   
+@app.callback(
+    Output('crop-emissions-scatter', 'figure'),
+    [Input('crop-emissions-dropdown', 'value')]
+)
+def update_crop_emissions_m(crop_type):
+    
+    # Fixed country value
+    country = 'USA'
+
+    # Filter the DataFrame for the specific country and crop type
+    filtered_df = co2_crop_j[
+        (co2_crop_j['Country'] == country) &
+        (co2_crop_j['Crop_Type'] == crop_type)
+    ]
+
+    if filtered_df.empty:
+        return px.scatter()  # Return an empty figure
+    
+    # Get x and y data
+    x = filtered_df['CO2_Emissions_MT']
+    y = filtered_df['Crop_Yield_MT_per_HA']
+
+    # Check if x and y have enough data points
+    if len(x) < 2 or len(y) < 2:
+        print("Not enough data points to perform correlation analysis.")
+        return
+
+    # Perform linear regression
+    slope, intercept, r, p, std_err = linregress(x, y)
+    line = slope * x + intercept
+
+     # Create the scatter plot using Plotly Express
+    fig = px.scatter(
+        filtered_df,
+        x='CO2_Emissions_MT',
+        y='Crop_Yield_MT_per_HA',
+        title=f"CO2 Emissions vs Crop Yield for {country} ({crop_type})",
+        labels={'CO2_Emissions_MT': 'CO2 Emissions (MT)', 'Crop_Yield_MT_per_HA': 'Crop Yield (MT/HA)'}
+    )
+
+    # Add the regression line
+    fig.add_scatter(
+        x=x,
+        y=line,
+        mode='lines',
+        name='Regression Line',
+        line=dict(color='red', dash='dash')
+    )
+
+    # Print the Pearson correlation coefficient
+    correlation_coefficient = round(pearsonr(x, y)[0], 2)
+    print(f"The correlation coefficient between CO2 Emissions and Crop Yield is {correlation_coefficient}")
+
+    return fig
+
 
 
 if __name__ == '__main__':
     app.run_server(debug=True)
 
+
+
+# =======================================================================================
+
+    
+   
 
 
 

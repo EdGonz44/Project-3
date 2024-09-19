@@ -109,6 +109,27 @@ app.layout = html.Div([
     html.H3("Pesticide Correlation Heatmaps"),
     dcc.Graph(id='correlation-pest-chart'),
 
+    #Creation of Scatter plots based on pesticides
+     html.Div([
+        html.Label('Scatter Plots/Pesticides:'),
+        dcc.Dropdown(
+            id='scatter-pest-dropdown',
+            options = [
+                {'label':'Select Variables', 'value': 'None'},
+                {'label':'World', 'value': 'world'},
+                {'label': 'Outlier', 'value':'outlier'},
+                {'label': 'Q1', 'value': 'q1'},
+                {'label': 'Q2', 'value': 'q2'},
+                {'label': 'Q3', 'value': 'q3'},
+                {'label': 'Q4', 'value': 'q4'}
+            ],
+            value = 'world'
+        ),
+    ], style={'width': '45%', 'display': 'inline-block'}),
+    html.H3("Pesticide Scatter Plots"),
+    dcc.Graph(id='scatter-pest-figure'),
+    dcc.Markdown(id='correlation--pest-coefficient'),  # New component to display text
+
     
     #Creation of CO2 emissions by country with GDP quartiles
     html.Div([
@@ -302,6 +323,68 @@ def update_pest_corr(selected_option):
             
     
     return fig
+
+#Callback for the new chart based on co2_emissions and pesticides with quartiles of GDP
+@app.callback(
+    [Output('scatter-pest-figure', 'figure'),
+     Output('correlation--pest-coefficient', 'children')],
+    [Input('scatter-pest-dropdown', 'value')]
+)
+def update_pest_emissions_m(selected_option):
+    if selected_option =='world':
+        worker_df = complete_e
+
+    elif selected_option == 'outlier':
+        worker_df = outlier_e
+
+    elif selected_option == 'q1':
+        worker_df = q1_e
+
+    elif selected_option == 'q2':
+        worker_df = q2_e
+
+    elif selected_option == 'q3':
+        worker_df = q3_e
+
+    elif selected_option == 'q4':
+        worker_df = q4_e
+
+    else: 
+        return px.imshow([])
+    
+    
+
+
+    x_axis = worker_df['Total_Pesticides']
+    y_axis = worker_df['CO2_Emissions']
+
+    # Linear regression
+    slope, intercept, r, p, std_err = linregress(x_axis, y_axis)
+    line = slope * x_axis + intercept
+
+    fig = px.scatter(
+        worker_df,
+        x='Total_Pesticides',
+        y = 'CO2_Emissions',
+        title= f"CO2 Emissions vs. Pesticide Usage",
+        labels = {'Total_Pesticides': 'Pest', 'CO2_Emissions': 'CO2'}
+    )
+
+    #Add Regression line
+    fig.add_scatter(
+        x=x_axis,
+        y=line,
+        mode='lines',
+        name='Regression Line',
+        line=dict(color='red', dash = 'dash')
+    )
+        
+    # Pearson correlation coefficient
+    correlation_coefficient = round(pearsonr(x_axis,y_axis)[0],2)
+
+
+    return fig, f"The correlation coefficient between CO2 Emissions and Pesticide use is **{correlation_coefficient}**"
+
 
 #Callback for the new chart based on co2 emissions with GDP screening
 @app.callback(

@@ -16,18 +16,18 @@ CO2 Emissions, Mortality, and the Impact of Environmental Action
 ## Overview
 
 ### What is this project about?
-Provide a brief summary of the project, including its purpose, significance, and any key questions or problems it addresses.
-
-Example:
-"This project explores the relationship between weather variables and latitude. It aims to analyze how temperature, humidity, and precipitation vary with latitude across different regions and seasons."
+This project explores the relationship between CO2 emissions and agriculture. It aims to understand the impact how the increase of co2 emissions over time has impacted crop yields and how farmers have adjusted to this.
 
 ## Project Details
 
 ### Background
-Explain the context and motivation behind the project. Include any relevant literature, prior research, or data sources that informed the project's direction.
+Our initial goal was to see how CO2 emissions have impacted the crops over time and therefore impacted human health.
 
 ### Goals
-Outline the main objectives of the project.
+- **Dhawani** Do countries with higher land use for agriculture have higher CO2 emissions.
+- **Megan** What is the relationship between CO2 emissions and agricultural gdp.
+- **Eduardo** Do countries with higher CO2 emissions use more pesticides to grow their crops?
+- **Jenny** Has crop yield improved over time with pesticides? Has pesticide use decreased the amount of land needed to produce crops?
 
 ### Methodology
 Detail the approach and methods used to achieve the project's goals.
@@ -35,8 +35,7 @@ Detail the approach and methods used to achieve the project's goals.
 In the "Methodology" section, you would typically describe the specific approaches, techniques, tools, and processes you used to accomplish the project's goals. Here are some examples of what you might include:
 
 1. **Data Collection:**
-   - Describe how you gathered the data for your project. This could involve web scraping, APIs, downloading datasets from public repositories, or collecting data manually.
-   - **Example:** "Weather data was collected using the OpenWeatherMap API for the years 2018-2022, covering various cities across the globe."
+   - Data was downloaded from [Our World in Data](https://ourworldindata.org/).
 
 2. **Data Cleaning:**
    - Explain how you processed and cleaned the data to make it suitable for analysis. This could involve handling missing values, removing duplicates, or correcting data types.

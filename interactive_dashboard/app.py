@@ -16,13 +16,13 @@ q3_e = pd.read_csv('Heat_map/q2_e.csv')
 q3_e = pd.read_csv('Heat_map/q3_e.csv')
 q4_e = pd.read_csv('Heat_map/q4_e.csv')
 
-q1_m = pd.read_csv('GDP_m/q1_m.csv')
-q2_m = pd.read_csv('GDP_m/q2_m.csv')
-q3_m = pd.read_csv('GDP_m/q3_m.csv')
-q4_m = pd.read_csv('GDP_m/q4_m.csv')
+# q1_m = pd.read_csv('GDP_m/q1_m.csv')
+# q2_m = pd.read_csv('GDP_m/q2_m.csv')
+# q3_m = pd.read_csv('GDP_m/q3_m.csv')
+# q4_m = pd.read_csv('GDP_m/q4_m.csv')
 cumulative = pd.read_csv('GDP_m/cumulative_df.csv')
 c_summary = pd.read_csv('GDP_m/cumulative_summary_stats.csv')
-main_m = pd.read_csv('GDP_m/main_m.csv')
+Main_m = pd.read_csv('GDP_m/Main_m.csv')
 
 co2_crop_j = pd.read_csv('co2_crop_j.csv')
 
@@ -125,7 +125,7 @@ app.layout = html.Div([
                 {'label': 'Q3', 'value': 'q3'},
                 {'label': 'Q4', 'value': 'q4'}
             ],
-            value = 'q1'
+            value = 'None'
         ),
     ], style={'width': '45%', 'display': 'inline-block'}),
     html.H3("CO2 Emissions based on GDP Quartile"),
@@ -351,11 +351,19 @@ def update_pest_corr(selected_option):
     [Input('co2-emissions-dropdown', 'value')]
 )
 def update_co2_emissions_m(selected_option):
-    # q1_df = cumulative.loc[(cumulative["co2_emissions"] > c_summary["co2_emissions"]["25%"])]
-    # q2_df = cumulative.loc[(cumulative["co2_emissions"] <= c_summary["co2_emissions"]["25%"]) & (cumulative["co2_emissions"] < c_summary["co2_emissions"]["50%"])]
-    # q3_df = cumulative.loc[(cumulative["co2_emissions"] <= c_summary["co2_emissions"]["50%"]) & (cumulative["co2_emissions"] < c_summary["co2_emissions"]["75%"])]
-    # q4_df = cumulative.loc[(cumulative["co2_emissions"] >= c_summary["co2_emissions"]["75%"])]
-    
+    q_countries_df = pd.DataFrame()
+
+    co2_25_percent = c_summary.loc[1, 'co2_emissions']
+    co2_50_percent = c_summary.loc[2, 'co2_emissions']
+    co2_75_percent = c_summary.loc[3, 'co2_emissions']
+
+    q1_m = cumulative.loc[(cumulative["co2_emissions"] > co2_25_percent)]
+    q2_m = cumulative.loc[(cumulative["co2_emissions"] <= co2_25_percent) & (cumulative["co2_emissions"] < co2_50_percent)] 
+    q3_m = cumulative.loc[(cumulative["co2_emissions"] <= co2_50_percent) & (cumulative["co2_emissions"] < co2_75_percent)]
+    q4_m = cumulative.loc[(cumulative["co2_emissions"] >= co2_75_percent)]
+
+
+
     if selected_option == 'q1':
         q_countries_df = q1_m
     elif selected_option == 'q2':
@@ -367,28 +375,61 @@ def update_co2_emissions_m(selected_option):
     else:
         fig ={}
 
+    # Handle empty DataFrame
+    if q_countries_df.empty:
+        return {
+            'data': [],
+            'layout': {
+                'title': 'No Data Available',
+                'xaxis': {'title': 'Year'},
+                'yaxis': {'title': 'CO2 Emissions (kt)'},
+            }
+        }
+    
+    # Prepare data for Plotly Express
+    filtered_data = Main_m[Main_m['country'].isin(q_countries_df.country)]
 
-    fig = px.figure(figsize=(20,10))
+    fig = px.line(
+        filtered_data,
+        x='year',
+        y='co2_emissions',
+        color='country',
+        title='CO2 Emissions by Country',
+        labels={'co2_emissions': 'CO2 Emissions (kt)', 'year': 'Year'}
+    )
 
-# for country in q_countries_list.index:
+    fig.update_layout(
+        xaxis_title='Year',
+        yaxis_title='CO2 Emissions (kt)',
+        legend_title='Countries',
+        template='plotly'
+    )
+    return fig
+    # # higher cumulative co2 emission countries
+    # for country in q_countries_df.index:
+    #     # df is the main dataframe
+    #     worker = Main_m.loc[Main_m['country'] == country]
 
-    # higher cumulative co2 emission countries
-    for country in q_countries_df.index:
-        # df is the main dataframe
-        worker = main_m.loc[main_m['country'] == country]
-        px.plot(worker['year'], worker['co2_emissions'])
+    #     # Add a column to identify the country
+    #     worker['country_name'] = country
+    #     combined_data.append(worker)
 
-        px.xlabel('Year')
-        px.ylabel('CO2 Emissions (kt)')
-        px.title('CO2 Emissions by Country')
-        px.grid(True)
+    #     # Concatenate all the country DataFrames into a single DataFrame
+    #     combined_df = pd.concat(combined_data)
 
-# Place the legend outside the plot
-# plt.legend(m_gdp_high.index, bbox_to_anchor=(1.05, 1), loc='upper left')
-# Adjust layout to make room for the legend
-        px.tight_layout()
-# Show the plot
-        px.show()
+    #     # Create the plot with all countries
+    #     fig = px.line(combined_df, x='year', y='co2_emissions', color='country_name',
+    #                   title='CO2 Emissions by Country')
+
+
+    #     fig.update_layout(
+    #     xaxis_title='Year',
+    #     yaxis_title='CO2 Emissions (kt)',
+    #     title='CO2 Emissions by Country'
+    # )
+        
+    # Show the plot
+    # fig.show()
 
 
 if __name__ == '__main__':
@@ -398,4 +439,12 @@ if __name__ == '__main__':
 
 
 
+
+
+
+
+# q1_m = cumulative.loc[(cumulative["co2_emissions"] > c_summary["co2_emissions"]["25%"])]
+    # q2_m = cumulative.loc[(cumulative["co2_emissions"] <= c_summary["co2_emissions"]["25%"]) & (cumulative["co2_emissions"] < c_summary["co2_emissions"]["50%"])]
+    # q3_m = cumulative.loc[(cumulative["co2_emissions"] <= c_summary["co2_emissions"]["50%"]) & (cumulative["co2_emissions"] < c_summary["co2_emissions"]["75%"])]
+    # q4_m = cumulative.loc[(cumulative["co2_emissions"] >= c_summary["co2_emissions"]["75%"])]
 

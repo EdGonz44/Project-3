@@ -11,16 +11,12 @@ data = pd.read_json('data.json')
 #HeatMap-Pesticide imports
 complete_e = pd.read_csv('Heat_map/complete_e.csv')
 outlier_e = pd.read_csv('Heat_map/outlier_e.csv')
-q1_e = pd.read_csv('Heat_map/outlier_e.csv')
-q2_e = pd.read_csv('Heat_map/q1_e.csv')
-q3_e = pd.read_csv('Heat_map/q2_e.csv')
+q1_e = pd.read_csv('Heat_map/q1_e.csv')
+q2_e = pd.read_csv('Heat_map/q2_e.csv')
 q3_e = pd.read_csv('Heat_map/q3_e.csv')
 q4_e = pd.read_csv('Heat_map/q4_e.csv')
 
-# q1_m = pd.read_csv('GDP_m/q1_m.csv')
-# q2_m = pd.read_csv('GDP_m/q2_m.csv')
-# q3_m = pd.read_csv('GDP_m/q3_m.csv')
-# q4_m = pd.read_csv('GDP_m/q4_m.csv')
+
 cumulative = pd.read_csv('GDP_m/cumulative_df.csv')
 c_summary = pd.read_csv('GDP_m/cumulative_summary_stats.csv')
 Main_m = pd.read_csv('GDP_m/Main_m.csv')
@@ -253,126 +249,57 @@ def update_scatter(selected_country):
 )
 def update_pest_corr(selected_option):
     if selected_option =='world':
-        #Creates pest-matrix based on selected metric for correlation-heatmap-dropdown
-        corr_matrix_df = complete_e.drop(columns = ['Code', 'Year', 'Country', 'Z-Score', 'Is-Outlier', 'Agri_Land_sq_km', 'Ag_perc_land',
-                                            'Ag_perc_GDP'])
-        corr_mat = corr_matrix_df.corr()
-        # Generate a heatmap
-        fig = px.imshow(corr_mat, title = 'Correlation Matrix World',
-                        labels=dict(x='Variables', y='Variables'),
-                        color_continuous_scale='RdBu',
-                        zmin=-1, zmax=1)
-         # Add annotations
-        for i in range(len(corr_mat.columns)):
-            for j in range(len(corr_mat.columns)):
-                fig.add_annotation(
-                    x=j,
-                    y=i,
-                    text=f'{corr_mat.iloc[i, j]:.2f}',
-                    font=dict(color='white' if abs(corr_mat.iloc[i, j]) > 0.5 else 'black'),
-                    showarrow=False
-                )
+        worker_df = complete_e.drop(columns=['Code', 'Year', 'Country', 'Z-Score', 'Is-Outlier', 'Agri_Land_sq_km', 'Ag_perc_land',
+                                                'Ag_perc_GDP'])
+        # worker_df = complete_e
+
+    elif selected_option == 'outlier':
+        worker_df = outlier_e.drop(columns = ['Code', 'Year', 'Country', 'Z-Score', 'Is-Outlier', 'Agri_Land_sq_km', 'Ag_perc_land',
+                                                'Ag_perc_GDP'])
+        # worker_df = outlier_e
+    elif selected_option == 'q1':
+        worker_df = q1_e.drop(columns = ['Code', 'Year', 'Country', 'Z-Score', 'Is-Outlier', 'Agri_Land_sq_km', 'Ag_perc_land',
+                                                'Ag_perc_GDP', 'Quartile'])
+        # worker_df = q1_e
+    elif selected_option == 'q2':
+        worker_df = q2_e.drop(columns = ['Code', 'Year', 'Country', 'Z-Score', 'Is-Outlier', 'Agri_Land_sq_km', 'Ag_perc_land',
+                                                'Ag_perc_GDP', 'Quartile'])
+        # worker_df = q2_e
+
+    elif selected_option == 'q3':
+        worker_df = q3_e.drop(columns = ['Code', 'Year', 'Country', 'Agri_Land_sq_km', 'Ag_perc_land',
+                                                'Ag_perc_GDP', 'Quartile'])
+        
+        # worker_df = q3_e
+    elif selected_option == 'q4':
+        worker_df = q4_e.drop(columns = ['Code', 'Year', 'Country', 'Agri_Land_sq_km', 'Ag_perc_land',
+                                                'Ag_perc_GDP', 'Quartile'])
+        # worker_df = q4_e
+    else: 
+        
+        return px.imshow([])
+
+
+     #Creates pest-matrix based on selected metric for correlation-heatmap-dropdown
+    corr_matrix_df = worker_df
+    corr_mat = corr_matrix_df.corr()
+    # Generate a heatmap
+    fig = px.imshow(corr_mat, title = 'Correlation Matrix World',
+                    labels=dict(x='Variables', y='Variables'),
+                    color_continuous_scale='sunset',
+                    zmin=-1, zmax=1)
+     # Add annotations
+    for i in range(len(corr_mat.columns)):
+        for j in range(len(corr_mat.columns)):
+             fig.add_annotation(
+                x=j,
+                y=i,
+                text=f'{corr_mat.iloc[i, j]:.2f}',
+                font=dict(color='white' if abs(corr_mat.iloc[i, j]) > 0.5 else 'black'),
+                showarrow=False
+            )
             
-    elif selected_option =='outlier':
-    #Creates pest-matrix based on selected metric for correlation-heatmap-dropdown
-        corr_matrix_df = outlier_e.drop(columns = ['Code', 'Year', 'Country', 'Z-Score', 'Is-Outlier', 'Agri_Land_sq_km', 'Ag_perc_land',
-                                            'Ag_perc_GDP'])
-        corr_mat = corr_matrix_df.corr()
-        # Generate a heatmap
-        fig = px.imshow(corr_mat, title = 'Correlation Matrix Outlier',
-                        color_continuous_scale='RdBu',
-                        zmin=-1, zmax=1)
-        # Add annotations
-        for i in range(len(corr_mat.columns)):
-            for j in range(len(corr_mat.columns)):
-                fig.add_annotation(
-                    x=j,
-                    y=i,
-                    text=f'{corr_mat.iloc[i, j]:.2f}',
-                    font=dict(color='white' if abs(corr_mat.iloc[i, j]) > 0.5 else 'black'),
-                    showarrow=False
-                )
-    elif selected_option =='q1':
-    #Creates pest-matrix based on selected metric for correlation-heatmap-dropdown
-        corr_matrix_df = q1_e.drop(columns = ['Code', 'Year', 'Country', 'Z-Score', 'Is-Outlier', 'Agri_Land_sq_km', 'Ag_perc_land',
-                                            'Ag_perc_GDP', 'Quartile'])
-        corr_mat = corr_matrix_df.corr()
-        # Generate a heatmap
-        fig = px.imshow(corr_mat, title = 'Correlation Matrix Q1',
-                        color_continuous_scale='RdBu',
-                        zmin=-1, zmax=1)
-        # Add annotations
-        for i in range(len(corr_mat.columns)):
-            for j in range(len(corr_mat.columns)):
-                fig.add_annotation(
-                    x=j,
-                    y=i,
-                    text=f'{corr_mat.iloc[i, j]:.2f}',
-                    font=dict(color='white' if abs(corr_mat.iloc[i, j]) > 0.5 else 'black'),
-                    showarrow=False
-                )
-        
-    elif selected_option =='q2':
-    #Creates pest-matrix based on selected metric for correlation-heatmap-dropdown
-        corr_matrix_df = q2_e.drop(columns = ['Code', 'Year', 'Country', 'Z-Score', 'Is-Outlier', 'Agri_Land_sq_km', 'Ag_perc_land',
-                                            'Ag_perc_GDP','Quartile'])
-        corr_mat = corr_matrix_df.corr()
-        # Generate a heatmap
-        fig = px.imshow(corr_mat, title = 'Correlation Matrix Q2',
-                        color_continuous_scale='RdBu',
-                        zmin=-1, zmax=1)
-        # Add annotations
-        for i in range(len(corr_mat.columns)):
-            for j in range(len(corr_mat.columns)):
-                fig.add_annotation(
-                    x=j,
-                    y=i,
-                    text=f'{corr_mat.iloc[i, j]:.2f}',
-                    font=dict(color='white' if abs(corr_mat.iloc[i, j]) > 0.5 else 'black'),
-                    showarrow=False
-                )
-        
-    elif selected_option =='q3':
-    #Creates pest-matrix based on selected metric for correlation-heatmap-dropdown
-        corr_matrix_df = q3_e.drop(columns = ['Code', 'Year', 'Country', 'Z-Score', 'Is-Outlier', 'Agri_Land_sq_km', 'Ag_perc_land',
-                                            'Ag_perc_GDP','Quartile'])
-        corr_mat = corr_matrix_df.corr()
-        # Generate a heatmap
-        fig = px.imshow(corr_mat, title = 'Correlation Matrix Q3',
-                        color_continuous_scale='RdBu',
-                        zmin=-1, zmax=1)
-        # Add annotations
-        for i in range(len(corr_mat.columns)):
-            for j in range(len(corr_mat.columns)):
-                fig.add_annotation(
-                    x=j,
-                    y=i,
-                    text=f'{corr_mat.iloc[i, j]:.2f}',
-                    font=dict(color='white' if abs(corr_mat.iloc[i, j]) > 0.5 else 'black'),
-                    showarrow=False
-                )
-        
-    elif selected_option =='q4':
-    #Creates pest-matrix based on selected metric for correlation-heatmap-dropdown
-        corr_matrix_df = q4_e.drop(columns = ['Code', 'Year', 'Country', 'Z-Score', 'Is-Outlier', 'Agri_Land_sq_km', 'Ag_perc_land',
-                                            'Ag_perc_GDP','Quartile'])
-        corr_mat = corr_matrix_df.corr()
-        # Generate a heatmap
-        fig = px.imshow(corr_mat, title = 'Correlation Matrix Q4',
-                        color_continuous_scale='RdBu',
-                        zmin=-1, zmax=1)
-        # Add annotations
-        for i in range(len(corr_mat.columns)):
-            for j in range(len(corr_mat.columns)):
-                fig.add_annotation(
-                    x=j,
-                    y=i,
-                    text=f'{corr_mat.iloc[i, j]:.2f}',
-                    font=dict(color='white' if abs(corr_mat.iloc[i, j]) > 0.5 else 'black'),
-                    showarrow=False
-                )
-    else:
-         fig = {}
+    
     return fig
 
 #Callback for the new chart based on co2 emissions with GDP screening

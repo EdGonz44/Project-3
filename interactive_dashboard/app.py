@@ -22,6 +22,7 @@ q3_m = pd.read_csv('GDP_m/q3_m.csv')
 q4_m = pd.read_csv('GDP_m/q4_m.csv')
 cumulative = pd.read_csv('GDP_m/cumulative_df.csv')
 c_summary = pd.read_csv('GDP_m/cumulative_summary_stats.csv')
+main_m = pd.read_csv('GDP_m/main_m.csv')
 
 co2_crop_j = pd.read_csv('co2_crop_j.csv')
 
@@ -374,20 +375,20 @@ def update_co2_emissions_m(selected_option):
     # higher cumulative co2 emission countries
     for country in q_countries_df.index:
         # df is the main dataframe
-        worker = df.loc[df['country'] == country]
-        plt.plot(data['year'], data['co2_emissions'])
+        worker = main_m.loc[main_m['country'] == country]
+        px.plot(worker['year'], worker['co2_emissions'])
 
-        plt.xlabel('Year')
-        plt.ylabel('CO2 Emissions (kt)')
-        plt.title('CO2 Emissions by Country')
-        plt.grid(True)
+        px.xlabel('Year')
+        px.ylabel('CO2 Emissions (kt)')
+        px.title('CO2 Emissions by Country')
+        px.grid(True)
 
 # Place the legend outside the plot
 # plt.legend(m_gdp_high.index, bbox_to_anchor=(1.05, 1), loc='upper left')
 # Adjust layout to make room for the legend
-plt.tight_layout()
+        px.tight_layout()
 # Show the plot
-plt.show()
+        px.show()
 
 
 if __name__ == '__main__':

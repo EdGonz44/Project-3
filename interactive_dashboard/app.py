@@ -16,6 +16,15 @@ q3_e = pd.read_csv('Heat_map/q2_e.csv')
 q3_e = pd.read_csv('Heat_map/q3_e.csv')
 q4_e = pd.read_csv('Heat_map/q4_e.csv')
 
+q1_m = pd.read_csv('GDP_m/q1_m.csv')
+q2_m = pd.read_csv('GDP_m/q2_m.csv')
+q3_m = pd.read_csv('GDP_m/q3_m.csv')
+q4_m = pd.read_csv('GDP_m/q4_m.csv')
+cumulative = pd.read_csv('GDP_m/cumulative_df.csv')
+c_summary = pd.read_csv('GDP_m/cumulative_summary_stats.csv')
+
+co2_crop_j = pd.read_csv('co2_crop_j.csv')
+
 
 # Initialize the Dash app
 app = dash.Dash(__name__)
@@ -112,7 +121,7 @@ app.layout = html.Div([
                 {'label':'Select Quartile', 'value': 'None'},
                 {'label':'Q1', 'value': 'q1'},
                 {'label': 'Q2', 'value':'q2'},
-                {'label': 'Q3', 'value': 'q4'},
+                {'label': 'Q3', 'value': 'q3'},
                 {'label': 'Q4', 'value': 'q4'}
             ],
             value = 'q1'
@@ -335,7 +344,50 @@ def update_pest_corr(selected_option):
          fig = {}
     return fig
 
+#Callback for the new chart based on HeatMap correlation
+@app.callback(
+    Output('co2-emissions-graph', 'figure'),
+    [Input('co2-emissions-dropdown', 'value')]
+)
+def update_co2_emissions_m(selected_option):
+    # q1_df = cumulative.loc[(cumulative["co2_emissions"] > c_summary["co2_emissions"]["25%"])]
+    # q2_df = cumulative.loc[(cumulative["co2_emissions"] <= c_summary["co2_emissions"]["25%"]) & (cumulative["co2_emissions"] < c_summary["co2_emissions"]["50%"])]
+    # q3_df = cumulative.loc[(cumulative["co2_emissions"] <= c_summary["co2_emissions"]["50%"]) & (cumulative["co2_emissions"] < c_summary["co2_emissions"]["75%"])]
+    # q4_df = cumulative.loc[(cumulative["co2_emissions"] >= c_summary["co2_emissions"]["75%"])]
+    
+    if selected_option == 'q1':
+        q_countries_df = q1_m
+    elif selected_option == 'q2':
+        q_countries_df = q2_m
+    elif selected_option == 'q3':
+        q_countries_df = q3_m
+    elif selected_option == 'q4':
+        q_countries_df = q4_m 
+    else:
+        fig ={}
 
+
+    fig = px.figure(figsize=(20,10))
+
+# for country in q_countries_list.index:
+
+    # higher cumulative co2 emission countries
+    for country in q_countries_df.index:
+        # df is the main dataframe
+        worker = df.loc[df['country'] == country]
+        plt.plot(data['year'], data['co2_emissions'])
+
+        plt.xlabel('Year')
+        plt.ylabel('CO2 Emissions (kt)')
+        plt.title('CO2 Emissions by Country')
+        plt.grid(True)
+
+# Place the legend outside the plot
+# plt.legend(m_gdp_high.index, bbox_to_anchor=(1.05, 1), loc='upper left')
+# Adjust layout to make room for the legend
+plt.tight_layout()
+# Show the plot
+plt.show()
 
 
 if __name__ == '__main__':

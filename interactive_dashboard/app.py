@@ -21,7 +21,8 @@ cumulative = pd.read_csv('GDP_m/cumulative_df.csv')
 c_summary = pd.read_csv('GDP_m/cumulative_summary_stats.csv')
 Main_m = pd.read_csv('GDP_m/Main_m.csv')
 
-co2_crop_j = pd.read_csv('co2_crop_j.csv')
+co2_crop_j = pd.read_csv('Crop_j/co2_crop_j.csv')
+merged_j = pd.read_csv('Crop_j/merged_j.csv')
 
 
 # Initialize the Dash app
@@ -157,6 +158,7 @@ app.layout = html.Div([
             id='crop-emissions-dropdown',
             options = [
                 {'label':'Select Crop', 'value': 'None'},
+                {'label': 'World', 'value': 'world'},
                 {'label':'Coffee', 'value': 'Coffee'},
                 {'label': 'Vegetables', 'value':'Vegetables'},
                 {'label': 'Barley', 'value': 'Barley'},
@@ -169,7 +171,7 @@ app.layout = html.Div([
                 {'label': 'Soybeans', 'value': 'Soybeans'}
 
             ],
-            value = 'Coffee'
+            value = 'world'
         ),
     ], style={'width': '45%', 'display': 'inline-block'}),
     html.H3("CO2 Emissions by crop type"),
@@ -462,18 +464,28 @@ def update_crop_emissions_m(crop_type):
     # Fixed country value
     country = 'USA'
 
-    # Filter the DataFrame for the specific country and crop type
-    filtered_df = co2_crop_j[
-        (co2_crop_j['Country'] == country) &
-        (co2_crop_j['Crop_Type'] == crop_type)
-    ]
+    #Testing code for world
+    if crop_type == 'world':
+        filtered_df =merged_j
+        x_holder = 'CO2_Emissions'
+        y_holder = 'Mean_Crop_Yield_MT_per_HA'
+    # Mean_Crop_Yield_MT_per_HA
+    else:
+        x_holder = 'CO2_Emissions_MT'
+        y_holder = 'Crop_Yield_MT_per_HA'
+        # Filter the DataFrame for the specific country and crop type
+        filtered_df = co2_crop_j[
+            (co2_crop_j['Country'] == country) &
+            (co2_crop_j['Crop_Type'] == crop_type)
+        ]
 
     if filtered_df.empty:
-        return px.scatter()  # Return an empty figure
+        empty_fig = px.scatter()  # Create an empty figure
+        return empty_fig, "No data available for this option."
     
     # Get x and y data
-    x = filtered_df['CO2_Emissions_MT']
-    y = filtered_df['Crop_Yield_MT_per_HA']
+    x = filtered_df[x_holder]
+    y = filtered_df[y_holder]
 
     # Check if x and y have enough data points
     if len(x) < 2 or len(y) < 2:
@@ -483,15 +495,24 @@ def update_crop_emissions_m(crop_type):
     # Perform linear regression
     slope, intercept, r, p, std_err = linregress(x, y)
     line = slope * x + intercept
-
+    if crop_type == 'world':
+         # Create the scatter plot using Plotly Express
+        fig = px.scatter(
+            filtered_df,
+            x='CO2_Emissions',
+            y='Mean_Crop_Yield_MT_per_HA',
+            title=f"CO2 Emissions vs Mean Crop Yield",
+            labels={'CO2_Emissions_MT': 'CO2_Emissions', 'Crop_Yield_MT_per_HA': 'Mean_Crop_Yield_MT_per_HA'}
+        )
+    else:
      # Create the scatter plot using Plotly Express
-    fig = px.scatter(
-        filtered_df,
-        x='CO2_Emissions_MT',
-        y='Crop_Yield_MT_per_HA',
-        title=f"CO2 Emissions vs Crop Yield for {country} ({crop_type})",
-        labels={'CO2_Emissions_MT': 'CO2 Emissions (MT)', 'Crop_Yield_MT_per_HA': 'Crop Yield (MT/HA)'}
-    )
+        fig = px.scatter(
+            filtered_df,
+            x='CO2_Emissions_MT',
+            y='Crop_Yield_MT_per_HA',
+            title=f"CO2 Emissions vs Crop Yield for {country} ({crop_type})",
+            labels={'CO2_Emissions_MT': 'CO2 Emissions (MT)', 'Crop_Yield_MT_per_HA': 'Crop Yield (MT/HA)'}
+        )
 
     # Add the regression line
     fig.add_scatter(

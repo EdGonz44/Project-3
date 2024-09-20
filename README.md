@@ -92,17 +92,17 @@ Our primary goals were to answer the following questions:
 #### Figure 3: Summary Statistics of Crop Yield
 ![Figure 3](https://github.com/EdGonz44/Project-3/blob/main/images/jj1.png)
 
-*The summary statistics table presents key metrics such as mean, median, variance, and standard error of the mean for crop yield (measured in metric tons per hectare) across different countries.*
+*The summary statistics table provides key metrics like mean, median, variance, and standard error of the mean (SEM) for crop yield (metric tons per hectare) across countries. The small standard deviations indicate consistent yields, while the low SEM suggests the sample means closely reflect the population means, indicating a representative dataset.*
 
 #### Figure 4a: CO2 Emissions vs. Average Crop Yield (Global)
 ![Figure 4a](https://github.com/EdGonz44/Project-3/blob/main/images/jj2.png)
 
-*This interactive scatter plot shows the relationship between CO2 emissions and average crop yield globally. The linear regression and Pearson's r correlation indicate the strength of this relationship. Users can hover over data points for detailed information.*
+*This interactive scatter plot illustrates the relationship between global CO2 emissions and average crop yield. Linear regression and Pearson's r correlation highlight the strength of this relationship. While our analysis revealed no significant linear correlation (Pearson's r = 0.05). Users can hover over individual data points to view detailed information about the mean crop yield, facilitating the identification of specific outliers in the dataset.*
 
 #### Figure 4b: CO2 Emissions vs. Average Crop Yield by Crop Type
 ![Figure 4b](https://github.com/EdGonz44/Project-3/blob/main/images/jj3.png)
 
-*This interactive chart allows users to select different crop types from a dropdown menu to examine the relationship between CO2 emissions and crop yield for specific crops. It includes linear regression analysis and Pearson's r correlation for each crop type.*
+*This interactive chart enables users to select different crop types from a dropdown menu to explore the relationship between CO2 emissions and crop yield for specific crops. It features linear regression analysis and Pearson's r correlation for each crop type. In the USA, we analyzed CO2 emissions (in metric tons) and crop yields (in metric tons per hectare) for crops such as coffee, vegetables, barley, rice, cotton, sugarcane, wheat, fruits, corn, and soybeans. Most crops showed no significant correlation, including coffee. However, fruits exhibited the strongest correlation with a Pearson's r of -0.31, which still does not indicate a meaningful relationship.*
 
 #### Figure 5a: Pesticide Correlation Heatmap (Global)
 ![Figure 5a](https://github.com/EdGonz44/Project-3/blob/main/images/eg1.png)

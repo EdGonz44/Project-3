@@ -110,7 +110,7 @@ Our primary goals were to answer the following questions:
 *The global heatmap displays Pearson’s r correlation coefficients between various variables, including CO2 emissions, pesticide use, GDP, and agricultural GDP. Users can hover over each cell to view precise correlation values.*
 
 #### Figure 5b: Pesticide Correlation Heatmap (By Quartiles & Outliers)
-![Figure 5b](https://github.com/EdGonz44/Project-3/blob/main/images/e2.png)
+![Figure 5b](https://github.com/EdGonz44/Project-3/blob/main/images/eg2.png)
 
 *This heatmap allows users to filter correlations based on GDP quartiles or outliers, offering a more granular analysis of the relationship between CO2 emissions, pesticide use, and other key variables.*
 

@@ -82,7 +82,7 @@ Our primary goals were to answer the following questions:
 #### Figure 1: CO2 Emissions Over Time by Country
 ![Figure 1](https://github.com/EdGonz44/Project-3/blob/main/images/ds1.png)
 
-*This bar chart highlights the top 10 countries with the highest CO2 emissions over time. It provides a comparative view of emissions by country, helping identify major contributors to global CO2 output.*
+*This plot highlights the top 10 countries with the highest CO2 emissions over time. It provides a comparative view of emissions by country, helping identify major contributors to global CO2 output.*
 
 #### Figure 2: Top 10 Countries by CO2 Emissions
 ![Figure 2](https://github.com/EdGonz44/Project-3/blob/main/images/ds2.png)

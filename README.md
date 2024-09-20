@@ -107,12 +107,12 @@ Our primary goals were to answer the following questions:
 #### Figure 5a: Pesticide Correlation Heatmap (Global)
 ![Figure 5a](https://github.com/EdGonz44/Project-3/blob/main/images/eg1.png)
 
-*The global heatmap displays Pearson’s r correlation coefficients between various variables, including CO2 emissions, pesticide use, GDP, and agricultural GDP. Users can hover over each cell to view precise correlation values.*
+*The global heatmap illustrates the Pearson's r correlation coefficients among variables such as CO2 emissions, pesticide use, GDP, and agricultural GDP, with users able to hover over cells for exact values. CO2 emissions have a stronger positive correlation with GDP than with pesticide usage, suggesting that as a country's economic capabilities increase, CO2 emissions also rise. Additionally, increased CO2 emissions are linked to higher pesticide use. To identify potential outliers, we divided the data into GDP quartiles because notable outliers like India, China, and the United States are GDP outliers, and the stronger correlation with GDP may skew the results.*
 
 #### Figure 5b: Pesticide Correlation Heatmap (By Quartiles & Outliers)
 ![Figure 5b](https://github.com/EdGonz44/Project-3/blob/main/images/eg2.png)
 
-*This heatmap allows users to filter correlations based on GDP quartiles or outliers, offering a more granular analysis of the relationship between CO2 emissions, pesticide use, and other key variables.*
+*This heatmap enables users to filter correlations by GDP quartiles or outliers, providing a detailed analysis of the relationships among CO2 emissions, pesticide use, and other key variables. Each quartile exhibits at least a moderate positive correlation between pesticide use and GDP, while CO2 emissions show slight deviations from this trend. All quartiles, except Q4, display significantly lower correlations, indicating that a few countries may be skewing the data. This suggests that external factors could influence the CO2-pesticide correlation, though GDP clearly has a moderate correlation with pesticide usage, as stronger economic capabilities likely enhance access to and production of necessary pesticides.*
 
 #### Figure 6a: CO2 Emissions vs. Pesticide Use (Global)
 ![Figure 6a](https://github.com/EdGonz44/Project-3/blob/main/images/eg3.png)

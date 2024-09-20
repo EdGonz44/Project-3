@@ -142,7 +142,7 @@ Our primary goals were to answer the following questions:
    ```
 
 ## Conclusions
-- Weak correlation between CO2 emissions and crop yields suggests minimal direct linkage.
+- There was no correlation found between CO2 emissions and crop yields.
 - Pesticides and CO2 emissions do not show consistent correlation across economic groupings.
 - Strong relationships were found between CO2 emissions, population, and agricultural GDP.
 - The dashboard is a powerful tool to explore how variables like industrial activities, forest fires, crop yield, and pesticide use impact CO2 emissions.
@@ -155,7 +155,7 @@ Our primary goals were to answer the following questions:
 - Include data on agricultural imports and exports to explore the role of trade in food production.
 
 ## Collaborators
-- **Eddie Gonzalez**: Data analysis, visualization, dashboard development, CO2, pesticides, and GDP analysis.
-- **Dhwani Shah**: Data analysis, visualization, dashboard development, trend analysis.
+- **Eddie Gonzalez**: Data analysis, visualization, database, dashboard development, CO2, pesticides, and GDP analysis.
+- **Dhwani Shah**: Data analysis, visualization, database, dashboard development, trend analysis.
 - **Jenny Jaurequi**: CO2 emissions, crop yield analysis, README development.
 - **Megan O'Connor**: Secondary research, narrative development, CO2 emissions & agricultural GDP analysis.

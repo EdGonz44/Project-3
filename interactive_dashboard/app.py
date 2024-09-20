@@ -90,6 +90,35 @@ app.layout = html.Div([
     html.H3("CO2 Emissions vs. Industrial Activities"),
     dcc.Graph(id='industry-emissions-graph'),
 
+    #Creation of scatter plots based on co2 and crop type
+    html.Div([
+        html.Label('CO2 emissions by crop type'),
+        dcc.Dropdown(
+            id='crop-emissions-dropdown',
+            options = [
+                {'label':'Select Crop', 'value': 'None'},
+                {'label': 'World', 'value': 'world'},
+                {'label':'Coffee', 'value': 'Coffee'},
+                {'label': 'Vegetables', 'value':'Vegetables'},
+                {'label': 'Barley', 'value': 'Barley'},
+                {'label': 'Rice', 'value': 'Rice'},
+                {'label': 'Cotton', 'value': 'Cotton'},
+                {'label': 'Sugarcane', 'value': 'Sugarcane'},
+                {'label': 'Wheat', 'value': 'Wheat'},
+                {'label': 'Fruits', 'value': 'Fruits'},
+                {'label': 'Corn', 'value': 'Corn'},
+                {'label': 'Soybeans', 'value': 'Soybeans'}
+
+            ],
+            value = 'world'
+        ),
+    ], style={'width': '45%', 'display': 'inline-block'}),
+    html.H3("CO2 Emissions by crop type"),
+    dcc.Graph(id='crop-emissions-scatter'),
+    dcc.Markdown(id='correlation--crop-coefficient'),  # New component to display text
+
+
+
      #Creation of Heatmap based on pesticides
      html.Div([
         html.Label('Correlation Heatmaps/Pesticides:'),
@@ -151,33 +180,7 @@ app.layout = html.Div([
     dcc.Graph(id='co2-emissions-graph'),
 
 
-    #Creation of scatter plots based on co2 and crop type
-    html.Div([
-        html.Label('CO2 emissions by crop type'),
-        dcc.Dropdown(
-            id='crop-emissions-dropdown',
-            options = [
-                {'label':'Select Crop', 'value': 'None'},
-                {'label': 'World', 'value': 'world'},
-                {'label':'Coffee', 'value': 'Coffee'},
-                {'label': 'Vegetables', 'value':'Vegetables'},
-                {'label': 'Barley', 'value': 'Barley'},
-                {'label': 'Rice', 'value': 'Rice'},
-                {'label': 'Cotton', 'value': 'Cotton'},
-                {'label': 'Sugarcane', 'value': 'Sugarcane'},
-                {'label': 'Wheat', 'value': 'Wheat'},
-                {'label': 'Fruits', 'value': 'Fruits'},
-                {'label': 'Corn', 'value': 'Corn'},
-                {'label': 'Soybeans', 'value': 'Soybeans'}
-
-            ],
-            value = 'world'
-        ),
-    ], style={'width': '45%', 'display': 'inline-block'}),
-    html.H3("CO2 Emissions by crop type"),
-    dcc.Graph(id='crop-emissions-scatter'),
-    dcc.Markdown(id='correlation--crop-coefficient')  # New component to display text
-
+    
 ])
 
 

@@ -6,7 +6,7 @@
    - [Background](#background)
    - [Goals](#goals)
    - [Methodology](#methodology)
-   - [Highlights](#highlights)
+   - [Visuals](#visuals)
    - [Dashboard](#dashboard)
 3. [Conclusions](#conclusions)
 4. [Future Work](#future-work)
@@ -47,14 +47,17 @@ Our primary goals were to answer the following questions:
       - **pop_to_gdp**: Population-to-GDP ratio.
       - **pop_to_ag_gdp**: Population-to-agricultural-GDP ratio, to account for the role of population size in agricultural production.
    - Compiled a cumulative dataset for country-level comparisons.
+  
+5. **Database Setup and Management:**
+   -  A MongoDB database was utilized to efficiently store and manage the project data, with `pymongo` facilitating interactions between the database and the analysis. Documents were structured to represent key variables such as CO2 emissions, GDP, population, agricultural production, and pesticide usage, enabling streamlined querying and analysis of these interconnected datasets.
 
-5. **Data Analysis:**
+6. **Data Analysis:**
    - Correlation analysis was performed on the main and cumulative datasets.
    - A multiple linear regression model was developed to predict CO2 emissions based on population, GDP, and agricultural GDP, explaining 57% of the variation in CO2 emissions.
    - Linear regressions explored the relationship between CO2 emissions and crop yield in the USA, as well as globally for various crops.
    - A pesticide correlation heatmap tested relationships between variables like CO2 emissions, GDP, agricultural GDP, population, total land, and pesticide use.
 
-6. **Visualization:**
+7. **Visualization:**
    - We generated line plots, scatter plots with linear regression, and correlation heatmaps using `pandas`, `matplotlib`, `scipy`, and `numpy`.
    - Visualizations included:
       - Scatter plots: CO2 emissions vs. forest fire incidents, agricultural land use, and life expectancy.
@@ -62,11 +65,11 @@ Our primary goals were to answer the following questions:
       - Heatmaps: CO2 emissions vs. mortality rates, and CO2 emissions vs. pesticide use.
       - Interactive dashboards displaying correlation analyses filtered by GDP quartiles and outliers.
 
-7. **Statistical Analysis:**
+8. **Statistical Analysis:**
    - A statistical summary table displayed the central tendency and variation of crop yields across countries, with the standard error of the mean (SEM) indicating how representative the sample was of the broader population.
    - Pearson’s correlation and linear regressions explored CO2 emissions and their relationship with GDP quartiles and outliers.
 
-8. **Tools and Libraries:**
+9. **Tools and Libraries:**
     - **Pandas**: Data cleaning and manipulation.
     - **Numpy**: Numerical computations.
     - **Matplotlib & Seaborn**: Visualizations.
@@ -74,10 +77,10 @@ Our primary goals were to answer the following questions:
     - **Plotly**: Interactive visualizations.
     - **Scipy**: Statistical analysis.
     - **Dash**: Dashboard development.
-    - **SQLite & SQLAlchemy**: Database management and querying.
     - **Kaleido**: Exporting high-quality static images.
+    - **Pymongo**: Storage, management, and querying data for analysis
 
-## Highlights
+## Visuals
 
 #### Figure 1: CO2 Emissions Over Time by Country
 ![Figure 1](https://github.com/EdGonz44/Project-3/blob/main/images/ds1.png)
@@ -157,5 +160,5 @@ Our primary goals were to answer the following questions:
 ## Collaborators
 - **Eddie Gonzalez**: Data analysis, visualization, database, dashboard development, CO2, pesticides, and GDP analysis.
 - **Dhwani Shah**: Data analysis, visualization, database, dashboard development, trend analysis.
-- **Jenny Jaurequi**: CO2 emissions, crop yield analysis, README development.
+- **Jenny Jaurequi**: Data analysis, visualization, CO2 emissions, crop yield analysis, README development.
 - **Megan O'Connor**: Secondary research, narrative development, CO2 emissions & agricultural GDP analysis.

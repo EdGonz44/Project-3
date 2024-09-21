@@ -93,7 +93,7 @@ Our primary goals were to answer the following questions:
 *This chart further breaks down the CO2 emissions of the top 10 countries, showing their relative contribution to global emissions.*
 
 #### Figure 3: Summary Statistics of Crop Yield
-![Figure 3](https://github.com/EdGonz44/Project-3/blob/main/images/jj1.png)
+<img src="https://github.com/EdGonz44/Project-3/blob/main/images/jj1.png" alt="Figure 3" width="400"/>
 
 *The summary statistics table provides key metrics like mean, median, variance, and standard error of the mean (SEM) for crop yield (metric tons per hectare) across countries. The small standard deviations indicate consistent yields, while the low SEM suggests the sample means closely reflect the population means, indicating a representative dataset.*
 

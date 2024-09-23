@@ -116,7 +116,7 @@ This box plot visualizes CO2 emissions across GDP quartiles, offering insights i
 
 ![Figure 7](https://github.com/EdGonz44/Project-3/blob/main/images/mo1.png)
 
-## Interactive Dashboard Access
+## Interactive Dashboard
 
 1. Clone the repository.  
 2. Install the required libraries:  

@@ -1,4 +1,4 @@
-# CO2 Emissions and Agricultural Variables
+# Climate Change and Agriculture
 
 ## Table of Contents
 1. [Overview](#overview)

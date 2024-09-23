@@ -7,7 +7,7 @@
    - [Goals](#goals)
    - [Methodology](#methodology)
    - [Visuals](#visuals)
-   - [Dashboard](#dashboard)
+   - [Interactive Dashboard](#interactive-dashboard)
 3. [Conclusions](#conclusions)
 4. [Future Work](#future-work)
 5. [Collaborators](#collaborators)

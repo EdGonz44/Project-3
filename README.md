@@ -1,5 +1,9 @@
 # Climate Change and Agriculture
 
+## Overview
+
+This project investigates the relationship between climate change and agricultural variables, focusing on how increasing CO2 emissions over time correlate with crop yields, pesticide usage, and agricultural GDP. The analysis examines CO2 emissions on national and global scales to determine how these emissions interact with a country’s agricultural profile. Key variables include crop yield, crop type, pesticide use, and gross domestic product (GDP).
+
 ## Table of Contents
 1. [Overview](#overview)
 2. [Project Details](#project-details)
@@ -11,10 +15,6 @@
 3. [Conclusions](#conclusions)
 4. [Future Work](#future-work)
 5. [Collaborators](#collaborators)
-
-## Overview
-
-This project investigates the relationship between climate change and agricultural variables, focusing on how increasing CO2 emissions over time correlate with crop yields, pesticide usage, and agricultural GDP. The analysis examines CO2 emissions on national and global scales to determine how these emissions interact with a country’s agricultural profile. Key variables include crop yield, crop type, pesticide use, and gross domestic product (GDP).
 
 ## Project Details
 
